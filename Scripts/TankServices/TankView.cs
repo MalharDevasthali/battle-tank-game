@@ -14,10 +14,9 @@ namespace TankServices
         private float canFire = 0f;
         public Transform BulletShootPoint;
 
+        public MeshRenderer[] childs;
 
-
-
-        public void GetTankController(TankController _tankController)
+        public void SetTankController(TankController _tankController)
         {
             tankController = _tankController;
         }
@@ -55,6 +54,30 @@ namespace TankServices
             {
                 canFire = tankController.tankModel.fireRate + Time.time;
                 tankController.ShootBullet();
+            }
+        }
+        public void ChangeColor()
+        {
+            if (tankController.tankModel.tankType == TankType.BlueTank)
+            {
+                for (int i = 0; i < childs.Length; i++)
+                {
+                    childs[i].material = tankController.tankModel.blueMat;
+                }
+            }
+            else if (tankController.tankModel.tankType == TankType.GreenTank)
+            {
+                for (int i = 0; i < childs.Length; i++)
+                {
+                    childs[i].material = tankController.tankModel.greenMat;
+                }
+            }
+            else if (tankController.tankModel.tankType == TankType.RedTank)
+            {
+                for (int i = 0; i < childs.Length; i++)
+                {
+                    childs[i].material = tankController.tankModel.redMat;
+                }
             }
         }
     }
