@@ -19,7 +19,7 @@ namespace EnemyServices
         public float attackDist { get; private set; }
         public BulletScriptableObject bullet { get; private set; }
 
-        public float health { get; private set; }
+        public float health { get; set; }
 
         private EnemyController controller;
 

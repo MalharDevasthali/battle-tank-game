@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
 using TankServices;
-using BulletServices;
-using VFXServices;
+using Commans;
 namespace EnemyServices
 {
-    public class EnemyView : MonoBehaviour
+    public class EnemyView : MonoBehaviour, IDamagable
     {
+        public GameObject TankDestroyVFX;
         public Transform shootingPoint;
         private EnemyController controller;
         public NavMeshAgent navMeshAgent { get; private set; }
@@ -38,13 +38,7 @@ namespace EnemyServices
             if (other.GetComponent<TankView>() != null)
                 playerDetected = true;
         }
-        private void OnCollisionEnter(Collision other)
-        {
-            if (other.gameObject.GetComponent<BulletView>() != null)
-            {
-                controller.OnCollisionWithBullet(other.gameObject.GetComponent<BulletView>());
-            }
-        }
+
 
         private void OnTriggerExit(Collider other)
         {
@@ -59,14 +53,17 @@ namespace EnemyServices
         }
         public void DestroyView()
         {
-            // doubt ?? if we miss something to set to null?? then what are the consecuences ?? how to deal with it?? any solution? 
+
             shootingPoint = null;
             controller = null;
             navMeshAgent = null;
-            VFXService.instance.TankExplosionEffects(transform.position);
-
-
+            TankDestroyVFX = null;
             Destroy(this.gameObject);
+        }
+
+        public void TakeDamage(float damage)
+        {
+            controller.ApplyDamage(damage);
         }
     }
 }

@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8dfeeffe90bcae429570158f92e4c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BullectDestroyVFX: {fileID: 195792, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
 --- !u!136 &1167410960382816257
 CapsuleCollider:
   m_ObjectHideFlags: 0

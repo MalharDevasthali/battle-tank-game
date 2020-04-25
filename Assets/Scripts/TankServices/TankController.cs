@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BulletServices;
 using BulletSO;
+using VFXServices;
 
 
 namespace TankServices
@@ -57,6 +58,7 @@ namespace TankServices
 
         public void DestroyController()
         {
+            VFXService.instance.InstantiateEffects(tankView.TankDestroyVFX, tankView.transform.position);
             tankModel.DestroyModel();
             tankView.DestroyView();
             tankModel = null;
@@ -64,11 +66,17 @@ namespace TankServices
             rigidbody = null;
         }
 
-        public void OnCollisionWithBullet(BulletView bullet)
+        private void Dead()
         {
             //bullets referece is passed for later use like adding damage to Tank kind of something
             TankService.instance.DestroyTank(this);
-            BulletService.instance.DestroyBullet(bullet.bulletController);
+        }
+        public void ApplyDamage(float damage)
+        {
+            if (tankModel.health - damage <= 0)
+                Dead();
+            else
+                tankModel.health -= damage;
         }
     }
 }

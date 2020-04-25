@@ -1,16 +1,17 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using VFXServices;
 using System.Threading.Tasks;
 using System;
+using Commans;
 
 namespace BulletServices
 {
     public class BulletView : MonoBehaviour
     {
         public BulletController bulletController { get; private set; }
-        private Coroutine destroy;
+
+        public GameObject BullectDestroyVFX;
         public void SetBulletController(BulletController _bulletController)
         {
             bulletController = _bulletController;
@@ -28,10 +29,20 @@ namespace BulletServices
                 BulletService.instance.DestroyBullet(bulletController);
         }
 
+        private void OnCollisionEnter(Collision other)
+        {
+            IDamagable iDamagable = other.gameObject.GetComponent<IDamagable>();
+            if (iDamagable != null)
+            {
+                iDamagable.TakeDamage(bulletController.bulletModel.damage);
+            }
+            BulletService.instance.DestroyBullet(bulletController);
+        }
+
         public void DestroyView()
         {
             bulletController = null;
-            VFXService.instance.BulletEffects(transform.position);
+            BullectDestroyVFX = null;
             Destroy(this.gameObject);
         }
     }
