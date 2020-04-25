@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyType: 2
   enemyView: {fileID: 5179792892772031961, guid: 3d5f92d0687a67445813e5d5e2ec0b0c,
     type: 3}
-  health: 40
+  health: 80
   movementSpeed: 40
   rotationSpeed: 80
   patrollingRadius: 30

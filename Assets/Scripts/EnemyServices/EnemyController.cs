@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
-using BulletSO;
+using VFXServices;
 using BulletServices;
 
 namespace EnemyServices
@@ -92,18 +92,22 @@ namespace EnemyServices
             Vector3 newDestination = GetRandomPosition();
             view.navMeshAgent.SetDestination(newDestination);
         }
-        public void OnCollisionWithBullet(BulletView bullet)
+        private void Dead()
         {
             EnemyService.instance.DestroyEnemy(this);
-            BulletService.instance.DestroyBullet(bullet.bulletController);
         }
-
+        public void ApplyDamage(float damage)
+        {
+            if (model.health - damage <= 0)
+                Dead();
+            else
+                model.health -= damage;
+        }
         public void DestoryController()
         {
+            VFXService.instance.InstantiateEffects(view.TankDestroyVFX, view.transform.position);
             model.DestroyModel();
             view.DestroyView();
-
-
             model = null;
             view = null;
         }

@@ -14,7 +14,7 @@ namespace TankServices
         public float movementSpeed { get; private set; }
         public float rotationSpeed { get; private set; }
         public float fireRate { get; private set; }
-        public float health { get; private set; }
+        public float health { get; set; }
         public Material material { get; private set; }
         public BulletScriptableObject bulletType { get; private set; }
 
