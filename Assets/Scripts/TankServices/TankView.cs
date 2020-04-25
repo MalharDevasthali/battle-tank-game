@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using BulletServices;
+using VFXServices;
 
 namespace TankServices
 {
@@ -9,6 +10,7 @@ namespace TankServices
     {
         //references
         private TankController tankController;
+
 
         //floats
         private float rotation;
@@ -28,26 +30,19 @@ namespace TankServices
             Movement();
             ShootBullet();
         }
-
-        private void Movement()
+        private void FixedUpdate()
         {
-            Rotation();
-            Accelaration();
-        }
-        private void Rotation()
-        {
-            rotation = Input.GetAxis("Horizontal");
+            if (movement != 0)
+                tankController.Move(movement, tankController.tankModel.movementSpeed);
 
             if (rotation != 0)
                 tankController.Rotate(rotation, tankController.tankModel.rotationSpeed);
-
         }
-        private void Accelaration()
-        {
-            movement = Input.GetAxis("Vertical");
 
-            if (movement != 0)
-                tankController.Move(movement, tankController.tankModel.movementSpeed);
+        private void Movement()
+        {
+            rotation = Input.GetAxis("Horizontal");
+            movement = Input.GetAxis("Vertical");
         }
 
         private void ShootBullet()
@@ -75,12 +70,12 @@ namespace TankServices
         public void DestroyView()
         {
             for (int i = 0; i < childs.Length; i++)
-            {
                 childs[i] = null;
-                tankController = null;
-                BulletShootPoint = null;
-                Destroy(this.gameObject);
-            }
+
+            tankController = null;
+            BulletShootPoint = null;
+            VFXService.instance.TankExplosionEffects(transform.position);
+            Destroy(this.gameObject);
         }
     }
 }
