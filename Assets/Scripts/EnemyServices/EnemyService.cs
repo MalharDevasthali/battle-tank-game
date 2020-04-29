@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Commons;
 using EnemySO;
+using System;
+using System.Threading.Tasks;
 
 namespace EnemyServices
 {
@@ -13,8 +15,9 @@ namespace EnemyServices
         private List<EnemyController> enemies = new List<EnemyController>();
         private Coroutine respawn;
 
-        private void Start()
+        private async void Start()
         {
+            await new WaitForEndOfFrame();
             CreateEnemy();
         }
 
