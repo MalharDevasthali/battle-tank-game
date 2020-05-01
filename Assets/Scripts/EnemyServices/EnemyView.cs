@@ -28,6 +28,10 @@ namespace EnemyServices
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
         }
+        private void Start()
+        {
+            InitializeState();
+        }
 
         public void SetEnemyController(EnemyController _controller)
         {
@@ -40,6 +44,26 @@ namespace EnemyServices
         public Transform GetTankTransform()
         {
             return tankView.transform;
+        }
+
+        private void InitializeState()
+        {
+            switch (initialState)
+            {
+                case EnemyState.Attacking:
+                    currentState = attackingState;
+                    break;
+                case EnemyState.Chasing:
+                    currentState = chasingState;
+                    break;
+                case EnemyState.Patrolling:
+                    currentState = patrollingState;
+                    break;
+                default:
+                    currentState = null;
+                    break;
+            }
+            currentState.OnStateEnter();
         }
 
         public void DestroyView()
@@ -59,5 +83,6 @@ namespace EnemyServices
         {
             controller.ApplyDamage(damage);
         }
+
     }
 }

@@ -2,24 +2,19 @@
 using System.Collections.Generic;
 using TankServices;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace EnemyServices
 {
     public class EnemyChasingState : EnemyStates
     {
-        protected override void Awake()
-        {
-        }
-        protected override void Start()
-        {
-        }
-
+        private bool canChase;
         public override void OnStateEnter()
         {
             base.OnStateEnter();
             Debug.Log("Entering Chase");
             enemyView.activeState = EnemyState.Chasing;
-            enemyView.controller.Chase();
+            Chase();
         }
 
         public override void OnStateExit()
@@ -37,20 +32,30 @@ namespace EnemyServices
         }
         private void OnTriggerStay(Collider other)
         {
-            if (enemyView.activeState == EnemyState.Attacking) return;
+            if (enemyView.activeState == EnemyState.Attacking || !canChase) return;
 
             if (other.gameObject.GetComponent<TankView>() != null)
-            {
-                enemyView.SetTankView(other.gameObject.GetComponent<TankView>());
-                enemyView.controller.Chase();
-            }
+                Chase();
+
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.GetComponent<TankView>() != null)
             {
+
                 ChangeState(enemyView.patrollingState);
             }
+        }
+        async private void Chase()
+        {
+            canChase = false;
+
+            enemyView.navMeshAgent.isStopped = true;
+            enemyView.navMeshAgent.ResetPath();
+            enemyView.navMeshAgent.SetDestination(enemyView.GetTankTransform().position);
+            await new WaitForSeconds(2f);
+
+            canChase = true;
         }
     }
 }

@@ -6,14 +6,6 @@ namespace EnemyServices
 {
     public class EnemyPatrollingState : EnemyStates
     {
-
-        protected override void Awake()
-        {
-        }
-        protected override void Start()
-        {
-
-        }
         public override void OnStateEnter()
         {
             base.OnStateEnter();
