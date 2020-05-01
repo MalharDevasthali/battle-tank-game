@@ -20,7 +20,8 @@ namespace BulletServices
 
         public void DestroyBullet(BulletController bullet)
         {
-            bullet.DestroyController();
+            if (bullet != null)
+                bullet.DestroyController();
 
             for (int i = 0; i < bullets.Count; i++)
             {

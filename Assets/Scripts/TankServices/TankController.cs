@@ -55,6 +55,10 @@ namespace TankServices
         {
             return tankModel.bulletType;
         }
+        public Vector3 GetCurrentTankPosition()
+        {
+            return tankView.transform.position;
+        }
 
         public void DestroyController()
         {
