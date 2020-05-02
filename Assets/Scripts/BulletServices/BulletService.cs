@@ -6,7 +6,7 @@ using BulletSO;
 
 namespace BulletServices
 {
-    public class BulletService : GenericSingleton<BulletService>
+    public class BulletService : GenericMonoSingleton<BulletService>
     {
 
         private List<BulletController> bullets = new List<BulletController>();
