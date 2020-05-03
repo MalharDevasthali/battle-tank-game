@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5158544930746108020}
   - component: {fileID: 382863848}
   - component: {fileID: 585031579}
+  - component: {fileID: 8928004279681267080}
   m_Layer: 0
   m_Name: ServiceHolder
   m_TagString: Untagged
@@ -85,5 +86,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed5ea04742c0e80408d15a74902146cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankExplosion: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 3}
-  bulletExplosion: {fileID: 195792, guid: 89e78efe92dfe5a42837b392cdb0bf9e, type: 3}
+--- !u!114 &8928004279681267080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454581327071241424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d69c4f9220451cd49bc6cc9d7ef12090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

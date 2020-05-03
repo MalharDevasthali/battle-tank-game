@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using Commons;
@@ -44,6 +42,7 @@ namespace BulletServices
 
         public void DestroyView()
         {
+            if (this == null) return;
             bulletController = null;
             BullectDestroyVFX = null;
             Destroy(this.gameObject);

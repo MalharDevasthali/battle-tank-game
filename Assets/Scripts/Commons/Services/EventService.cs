@@ -9,11 +9,7 @@ namespace Commons
         public event Action OnPlayerFiredBullet;
 
 
-        //  private void Start()
-        //  {
-        //      OnPlayerFiredBullet?.Invoke();
-        //  }
-        public void InvokeEvent()
+        public void InvokeOnPlayerFiredBulletEvent()
         {
             OnPlayerFiredBullet?.Invoke();
         }

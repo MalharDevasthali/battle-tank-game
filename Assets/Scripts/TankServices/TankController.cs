@@ -15,6 +15,7 @@ namespace TankServices
 
         public TankController(TankModel _tankModel, TankView _tankView) //constructor
         {
+            SubscribeEvents();
             tankModel = _tankModel;
             tankView = GameObject.Instantiate<TankView>(_tankView);
             CameraController.instance.SetTarget(tankView.transform);
@@ -22,6 +23,11 @@ namespace TankServices
             tankView.SetTankController(this);
             tankModel.SetTankController(this);
             tankView.ChangeColor(tankModel.material);
+        }
+
+        private void SubscribeEvents()
+        {
+            EventService.instance.OnPlayerFiredBullet += UpdateBulletCounter;
         }
 
         public void Move(float movement, float movementSpeed)
@@ -39,9 +45,7 @@ namespace TankServices
 
         public void ShootBullet()
         {
-            // EventService eventService = new EventService();
-            EventService.instance.OnPlayerFiredBullet += UpdateBulletCounter;
-            EventService.instance.InvokeEvent();
+            EventService.instance.InvokeOnPlayerFiredBulletEvent();
             BulletService.instance.CreateBullet(GetFiringPosition(), GetFiringAngle(), GetBullet());
         }
 
