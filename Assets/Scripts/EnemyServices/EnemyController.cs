@@ -44,13 +44,6 @@ namespace EnemyServices
             return view.transform.rotation;
         }
 
-        public void Chase()
-        {
-            view.navMeshAgent.isStopped = true;
-            view.navMeshAgent.ResetPath();
-            view.navMeshAgent.SetDestination(view.GetTankTransform().position);
-        }
-
         public void Patrol()
         {
             timer += Time.deltaTime;

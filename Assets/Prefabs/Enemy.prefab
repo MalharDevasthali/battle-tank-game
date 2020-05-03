@@ -205,7 +205,6 @@ GameObject:
   m_Component:
   - component: {fileID: 275821503410117595}
   - component: {fileID: 5179792892772031961}
-  - component: {fileID: 3562859153356104639}
   - component: {fileID: 5024593055069210385}
   - component: {fileID: 3842762778613411950}
   - component: {fileID: 47227110844427232}
@@ -253,20 +252,8 @@ MonoBehaviour:
   chasingState: {fileID: 1364793205224664741}
   attackingState: {fileID: 8598906782032717416}
   initialState: 1
---- !u!114 &3562859153356104639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 275821503410013755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bccfaf3f61cc51c4fb8f8a620a1c7527, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyView: {fileID: 5179792892772031961}
   activeState: 0
+  currentState: {fileID: 0}
 --- !u!65 &5024593055069210385
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -536,7 +523,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyView: {fileID: 5179792892772031961}
-  activeState: 0
 --- !u!1 &1566636845989480710
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +644,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyView: {fileID: 5179792892772031961}
-  activeState: 0
 --- !u!1 &7825716942121873088
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,7 +688,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyView: {fileID: 5179792892772031961}
-  activeState: 0
 --- !u!1001 &3197623990253591793
 PrefabInstance:
   m_ObjectHideFlags: 0

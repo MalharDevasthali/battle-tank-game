@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EnemyServices
 {
-    public class EnemyService : GenericSingleton<EnemyService>
+    public class EnemyService : GenericMonoSingleton<EnemyService>
     {
         public EnemykScriptableObjectList enemyTypes;
         [HideInInspector] public EnemyScriptableObject enemy;
