@@ -13,6 +13,10 @@ namespace Commons
         {
             OnPlayerFiredBullet?.Invoke();
         }
+        public void InvokeEnemyKilledEvent()
+        {
+            OnEnemyDeath?.Invoke();
+        }
 
     }
 }
