@@ -25,7 +25,6 @@ namespace TankSO
         public float fireRate;
         public BulletScriptableObject bulletType;
         public Material material;
-
     }
 
     [CreateAssetMenu(fileName = "TankScriptableObject", menuName = "ScriptableObject/Tank/TankScriptableObjectList")]

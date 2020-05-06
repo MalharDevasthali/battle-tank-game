@@ -11,13 +11,11 @@ namespace EnemyServices
         public override void OnStateEnter()
         {
             base.OnStateEnter();
-            Debug.Log("Entering Attack");
             enemyView.activeState = EnemyState.Attacking;
         }
         public override void OnStateExit()
         {
             base.OnStateExit();
-            Debug.Log("Exiting Attack");
         }
         private void OnTriggerEnter(Collider other)
         {

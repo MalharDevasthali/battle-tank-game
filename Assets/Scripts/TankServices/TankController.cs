@@ -20,12 +20,16 @@ namespace TankServices
             tankView = GameObject.Instantiate<TankView>(_tankView);
             CameraController.instance.SetTarget(tankView.transform);
             rigidbody = tankView.GetComponent<Rigidbody>();
-            AchievementService.instance.GetAchievementController().ResetAchievements();
             tankView.SetTankController(this);
             tankModel.SetTankController(this);
             tankView.ChangeColor(tankModel.material);
             SubscribeEvents();
+            UIService.instance.UpdateHealthText(tankModel.health);
+            UIService.instance.UpdateScoreText(tankModel.Score);
+            AchievementService.instance.GetAchievementController().ResetAchievements();
         }
+
+
 
         private void SubscribeEvents()
         {
@@ -88,6 +92,11 @@ namespace TankServices
             tankModel = null;
             tankView = null;
             rigidbody = null;
+            UnSubscribeEvents();
+        }
+        private void UnSubscribeEvents()
+        {
+            EventService.instance.OnPlayerFiredBullet -= UpdateBulletsFiredCounter;
         }
 
         private void Dead()
@@ -99,7 +108,10 @@ namespace TankServices
             if (tankModel.health - damage <= 0)
                 Dead();
             else
+            {
                 tankModel.health -= damage;
+                UIService.instance.UpdateHealthText(tankModel.health);
+            }
         }
     }
 }

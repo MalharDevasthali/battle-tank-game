@@ -30,6 +30,7 @@ namespace TankServices
         //Achievenement Related 
         public int BulletsFired;
         public int EnemiesKilled;
+        public int Score;
 
 
         public TankModel(TankScriptableObject tankScriptable, TankScriptableObjectList tankList)
@@ -50,6 +51,8 @@ namespace TankServices
             //achivement related
             BulletsFired = 0;
             EnemiesKilled = 0;
+            Score = 0;
+
         }
         public void SetTankController(TankController _tankController)
         {

@@ -12,7 +12,6 @@ namespace EnemyServices
         public override void OnStateEnter()
         {
             base.OnStateEnter();
-            Debug.Log("Entering Chase");
             enemyView.activeState = EnemyState.Chasing;
             Chase();
         }
@@ -20,7 +19,6 @@ namespace EnemyServices
         public override void OnStateExit()
         {
             base.OnStateExit();
-            Debug.Log("Exiting Chase");
         }
         private void OnTriggerEnter(Collider other)
         {

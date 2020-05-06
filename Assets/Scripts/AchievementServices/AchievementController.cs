@@ -23,7 +23,7 @@ namespace AchievementServices
         {
             for (int i = 0; i < model.BulletsFiredAchievement.Tiers.Length; i++)
             {
-                if (i < currentBulletFiredAchievementTier) continue;
+                if (i > currentBulletFiredAchievementTier) continue;
                 if (tankModel.BulletsFired == model.BulletsFiredAchievement.Tiers[i].requirement)
                 {
                     UnlockAchievement(model.BulletsFiredAchievement.Tiers[i].SelectAchievement.ToString());
@@ -36,12 +36,12 @@ namespace AchievementServices
         {
             for (int i = 0; i < model.EnemiesKilledAchievement.Tiers.Length; i++)
             {
-                if (i < currentEnemiesKilledtAchievementTier) continue;
+                if (i > currentEnemiesKilledtAchievementTier) continue;
                 if (tankModel.EnemiesKilled == model.EnemiesKilledAchievement.Tiers[i].requirement)
                 {
                     UnlockAchievement(model.EnemiesKilledAchievement.Tiers[i].SelectAchievement.ToString());
-                    currentEnemiesKilledtAchievementTier = i;
                 }
+                currentEnemiesKilledtAchievementTier = i;
             }
         }
 
@@ -72,6 +72,11 @@ namespace AchievementServices
         {
             currentBulletFiredAchievementTier = 0;
             currentEnemiesKilledtAchievementTier = 0;
+            // if (tankModel != null)
+            // {
+            //     tankModel.BulletsFired = 0;
+            //     tankModel.EnemiesKilled = 0;
+            // }
         }
     }
 }
