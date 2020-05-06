@@ -9,14 +9,27 @@ namespace TankServices
     //this class is responsilbe to take care of data...
     public class TankModel
     {
+        //Tank Type
         private TankController tankController;
         public TankType tankType { get; private set; }
+
+        //Movement Related 
         public float movementSpeed { get; private set; }
         public float rotationSpeed { get; private set; }
+
+        //Attack Related 
         public float fireRate { get; private set; }
-        public float health { get; set; }
-        public Material material { get; private set; }
         public BulletScriptableObject bulletType { get; private set; }
+
+        //Health Related
+        public float health { get; set; }
+
+        //Visuals
+        public Material material { get; private set; }
+
+        //Achievenement Related 
+        public int BulletsFired;
+        public int EnemiesKilled;
 
 
         public TankModel(TankScriptableObject tankScriptable, TankScriptableObjectList tankList)
@@ -34,6 +47,9 @@ namespace TankServices
             //color
             material = tankScriptable.material;
 
+            //achivement related
+            BulletsFired = 0;
+            EnemiesKilled = 0;
         }
         public void SetTankController(TankController _tankController)
         {

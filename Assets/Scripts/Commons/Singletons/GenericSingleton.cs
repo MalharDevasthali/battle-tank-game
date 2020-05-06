@@ -8,7 +8,19 @@ namespace Commons
         private static T Instance;
         public static T instance { get { return Instance; } }
 
-        protected virtual void Awake()
+        // protected virtual void Awake()
+        // {
+        //     if (Instance == null)
+        //     {
+        //         Instance = (T)this;
+        //     }
+        //     else
+        //     {
+        //         Debug.LogError(Instance + "is Tring to create another instance");
+        //         Instance = null;
+        //     }
+        // }
+        public GenericSingleton()
         {
             if (Instance == null)
             {
@@ -16,7 +28,7 @@ namespace Commons
             }
             else
             {
-                Debug.LogError(Instance + "is Tring to create another instance");
+                Debug.LogError(Instance + " is Tring to create another instance");
                 Instance = null;
             }
         }

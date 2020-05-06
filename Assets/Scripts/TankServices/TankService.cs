@@ -10,9 +10,9 @@ namespace TankServices
     public class TankService : GenericMonoSingleton<TankService>
     {
         public TankScriptableObjectList tankList;
+        private TankModel currentTankModel;
         public TankScriptableObject tankScriptable { get; private set; }
         private List<TankController> tanks = new List<TankController>();
-        private Coroutine respawn;
 
         private void Start()
         {
@@ -27,11 +27,17 @@ namespace TankServices
             tankScriptable = tankList.tanks[rand];
 
             TankModel tankModel = new TankModel(tankScriptable, tankList);
+            currentTankModel = tankModel;
             TankController controller = new TankController(tankModel, tankScriptable.tankView);
             tanks.Add(controller);
         }
 
-        public void DestroyTank(TankController tank)
+        public TankModel GetCurrentTankModel()
+        {
+            return currentTankModel;
+        }
+
+        public async void DestroyTank(TankController tank)
         {
             tank.DestroyController();
             for (int i = 0; i < tanks.Count; i++)
@@ -42,18 +48,8 @@ namespace TankServices
                     tanks.Remove(tank);
                 }
             }
-            if (respawn == null)
-                StartCoroutine(RespawnTank());
-        }
-        private IEnumerator RespawnTank()
-        {
-            yield return new WaitForSeconds(4f);
+            await new WaitForSeconds(4f);
             CreateTank();
-            if (respawn != null)
-            {
-                StopCoroutine(respawn);
-                respawn = null;
-            }
         }
     }
 }

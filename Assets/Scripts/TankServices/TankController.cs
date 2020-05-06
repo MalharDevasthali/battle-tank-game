@@ -3,7 +3,7 @@ using Commons;
 using BulletServices;
 using BulletSO;
 using VFXServices;
-using System;
+using AchievementServices;
 
 namespace TankServices
 {
@@ -15,13 +15,21 @@ namespace TankServices
 
         public TankController(TankModel _tankModel, TankView _tankView) //constructor
         {
+
             tankModel = _tankModel;
             tankView = GameObject.Instantiate<TankView>(_tankView);
             CameraController.instance.SetTarget(tankView.transform);
             rigidbody = tankView.GetComponent<Rigidbody>();
+            AchievementService.instance.GetAchievementController().ResetAchievements();
             tankView.SetTankController(this);
             tankModel.SetTankController(this);
             tankView.ChangeColor(tankModel.material);
+            SubscribeEvents();
+        }
+
+        private void SubscribeEvents()
+        {
+            EventService.instance.OnPlayerFiredBullet += UpdateBulletsFiredCounter;
         }
 
         public void Move(float movement, float movementSpeed)
@@ -39,15 +47,20 @@ namespace TankServices
 
         public void ShootBullet()
         {
-            // EventService eventService = new EventService();
-            EventService.instance.OnPlayerFiredBullet += UpdateBulletCounter;
-            EventService.instance.InvokeEvent();
+            EventService.instance.InvokeOnPlayerFiredBulletEvent();
             BulletService.instance.CreateBullet(GetFiringPosition(), GetFiringAngle(), GetBullet());
         }
 
-        private void UpdateBulletCounter()
+        private void UpdateBulletsFiredCounter()
         {
-            Debug.Log("BulletFiredbyPlayer");
+            //if I use public of tankModel of this script...it is showing NullRef only for this Event Listner
+            //elsewhere tankModel instace is working fine...?? why??? due to events??? when I do not set tankModel = null
+            //in DestroyTank Method ..it works fine...?? problem is for only this method?? strange ?? :/
+
+            Debug.Log("in Fire Bullet");
+            TankService.instance.GetCurrentTankModel().BulletsFired += 1;
+            AchievementService.instance.GetAchievementController().CheckForBulletFiredAchievement();
+
         }
 
         public Vector3 GetFiringPosition()
@@ -79,7 +92,6 @@ namespace TankServices
 
         private void Dead()
         {
-            //bullets referece is passed for later use like adding damage to Tank kind of something
             TankService.instance.DestroyTank(this);
         }
         public void ApplyDamage(float damage)
