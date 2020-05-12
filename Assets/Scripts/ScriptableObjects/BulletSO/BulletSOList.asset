@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
   m_Name: BulletSOList
-  m_EditorClassIdentifier: Assembly-CSharp:BulletSO:BulletScriptableObjectList
+  m_EditorClassIdentifier: Assembly-CSharp:BulletSO:BulletSOList/BulletScriptableObjectList
   bulletsTypes:
   - {fileID: 11400000, guid: 9052471bee9d20943be9b2f08d961e72, type: 2}
   - {fileID: 11400000, guid: 719b22f0b002f4943ab7e5066925d047, type: 2}

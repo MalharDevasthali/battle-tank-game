@@ -40,10 +40,10 @@ namespace EnemyServices
 
         private void UpdateEnemiesKilledCount()
         {
-
             TankService.instance.GetCurrentTankModel().EnemiesKilled += 1;
+            PlayerPrefs.SetInt("EnemiesKilled", TankService.instance.GetCurrentTankModel().EnemiesKilled);
             Debug.Log(TankService.instance.GetCurrentTankModel().EnemiesKilled);
-            UIService.instance.UpdateScoreText(TankService.instance.GetCurrentTankModel().EnemiesKilled);
+            UIService.instance.UpdateScoreText();
             AchievementService.instance.GetAchievementController().CheckForEnemiesKilledAchievement();
         }
 

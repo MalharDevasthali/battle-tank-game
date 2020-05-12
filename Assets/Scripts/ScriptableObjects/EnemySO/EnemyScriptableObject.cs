@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using EnemyServices;
 using BulletSO;
@@ -31,11 +30,5 @@ namespace EnemySO
         public BulletScriptableObject bulletType;
     }
 
-    [CreateAssetMenu(fileName = "EnemyScriptableObject", menuName = "ScriptableObject/Enemy/NewEnemykScriptableObjectList")]
-    public class EnemykScriptableObjectList : ScriptableObject
-    {
-        public EnemyScriptableObject[] enemies;
 
-        //add here some comman things which are every enemies....
-    }
 }

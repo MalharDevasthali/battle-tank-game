@@ -30,10 +30,8 @@ namespace TankServices
         //Achievenement Related 
         public int BulletsFired;
         public int EnemiesKilled;
-        public int Score;
 
-
-        public TankModel(TankScriptableObject tankScriptable, TankScriptableObjectList tankList)
+        public TankModel(TankScriptableObject tankScriptable, TankSOList tankList)
         {
             //type
             tankType = tankScriptable.tankType;
@@ -49,10 +47,8 @@ namespace TankServices
             material = tankScriptable.material;
 
             //achivement related
-            BulletsFired = 0;
-            EnemiesKilled = 0;
-            Score = 0;
-
+            BulletsFired = PlayerPrefs.GetInt("BulletsFired");
+            EnemiesKilled = PlayerPrefs.GetInt("EnemiesKilled");
         }
         public void SetTankController(TankController _tankController)
         {

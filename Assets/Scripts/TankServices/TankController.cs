@@ -25,8 +25,6 @@ namespace TankServices
             tankView.ChangeColor(tankModel.material);
             SubscribeEvents();
             UIService.instance.UpdateHealthText(tankModel.health);
-            UIService.instance.UpdateScoreText(tankModel.Score);
-            AchievementService.instance.GetAchievementController().ResetAchievements();
         }
 
 
@@ -57,14 +55,10 @@ namespace TankServices
 
         private void UpdateBulletsFiredCounter()
         {
-            //if I use public of tankModel of this script...it is showing NullRef only for this Event Listner
-            //elsewhere tankModel instace is working fine...?? why??? due to events??? when I do not set tankModel = null
-            //in DestroyTank Method ..it works fine...?? problem is for only this method?? strange ?? :/
-
-            Debug.Log("in Fire Bullet");
-            TankService.instance.GetCurrentTankModel().BulletsFired += 1;
+            tankModel.BulletsFired += 1;
+            PlayerPrefs.SetInt("BulletsFired", tankModel.BulletsFired);
+            Debug.Log(tankModel.BulletsFired);
             AchievementService.instance.GetAchievementController().CheckForBulletFiredAchievement();
-
         }
 
         public Vector3 GetFiringPosition()
@@ -87,6 +81,7 @@ namespace TankServices
         public void DestroyController()
         {
             VFXService.instance.InstantiateEffects(tankView.TankDestroyVFX, tankView.transform.position);
+            UIService.instance.ResetScore();
             tankModel.DestroyModel();
             tankView.DestroyView();
             tankModel = null;

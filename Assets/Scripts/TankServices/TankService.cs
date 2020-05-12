@@ -9,7 +9,7 @@ namespace TankServices
 {
     public class TankService : GenericMonoSingleton<TankService>
     {
-        public TankScriptableObjectList tankList;
+        public TankSOList tankList;
         private TankModel currentTankModel;
         public TankScriptableObject tankScriptable { get; private set; }
         private List<TankController> tanks = new List<TankController>();

@@ -10,7 +10,7 @@ namespace EnemyServices
 {
     public class EnemyService : GenericMonoSingleton<EnemyService>
     {
-        public EnemykScriptableObjectList enemyTypes;
+        public EnemySOList enemyTypes;
         [HideInInspector] public EnemyScriptableObject enemy;
         private List<EnemyController> enemies = new List<EnemyController>();
         private Coroutine respawn;

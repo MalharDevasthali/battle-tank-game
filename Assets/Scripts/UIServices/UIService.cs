@@ -9,8 +9,13 @@ public class UIService : GenericMonoSingleton<UIService>
     public TextMeshProUGUI PopUpText;
     public TextMeshProUGUI HealthText;
     public TextMeshProUGUI ScoreText;
+    private int currentScore;
 
-
+    private void Start()
+    {
+        currentScore = 0;
+        ScoreText.text = "Score:" + currentScore.ToString();
+    }
     public async void ShowPopUpText(string text, float timeForPopUp)
     {
         PopUpText.enabled = true;
@@ -20,11 +25,17 @@ public class UIService : GenericMonoSingleton<UIService>
         PopUpText.enabled = false;
     }
 
-    public void UpdateScoreText(int currentScore, int scoreMultiplier = 1)
+    public void UpdateScoreText(int scoreMultiplier = 1)
     {
-        int finalScore = (currentScore * 10) * scoreMultiplier;
+        int finalScore = (currentScore + 10) * scoreMultiplier;
+        currentScore = finalScore;
         ScoreText.text = "Score: " + finalScore.ToString();
 
+    }
+    public void ResetScore()
+    {
+        currentScore = 0;
+        ScoreText.text = "Score: " + currentScore.ToString();
     }
 
     public void UpdateHealthText(float currentHealth)
