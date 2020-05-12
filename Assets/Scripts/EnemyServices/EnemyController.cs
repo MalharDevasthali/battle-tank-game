@@ -22,7 +22,6 @@ namespace EnemyServices
             view = GameObject.Instantiate<EnemyView>(_view, GetRandomPosition(), Quaternion.identity);
             model.SetEnemyController(this);
             view.SetEnemyController(this);
-            AchievementService.instance.GetAchievementController().ResetAchievements();
             SubscribeEvents();
         }
         public Vector3 GetRandomPosition()
@@ -41,8 +40,10 @@ namespace EnemyServices
 
         private void UpdateEnemiesKilledCount()
         {
-            Debug.Log("EnemyDied");
+
             TankService.instance.GetCurrentTankModel().EnemiesKilled += 1;
+            Debug.Log(TankService.instance.GetCurrentTankModel().EnemiesKilled);
+            UIService.instance.UpdateScoreText(TankService.instance.GetCurrentTankModel().EnemiesKilled);
             AchievementService.instance.GetAchievementController().CheckForEnemiesKilledAchievement();
         }
 
@@ -85,7 +86,10 @@ namespace EnemyServices
             if (model.health < 0) return;
 
             if (model.health - damage <= 0)
+            {
+                Debug.Log("in Death");
                 Dead();
+            }
             else
                 model.health -= damage;
         }
@@ -96,6 +100,11 @@ namespace EnemyServices
             view.DestroyView();
             model = null;
             view = null;
+            UnsubscribeEvents();
+        }
+        private void UnsubscribeEvents()
+        {
+            EventService.instance.OnEnemyDeath -= UpdateEnemiesKilledCount;
         }
     }
 }

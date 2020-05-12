@@ -9,7 +9,6 @@ namespace EnemyServices
         public override void OnStateEnter()
         {
             base.OnStateEnter();
-            Debug.Log("Entering Patrol");
             enemyView.activeState = EnemyState.Patrolling;
         }
         private void Update()
@@ -20,8 +19,6 @@ namespace EnemyServices
         public override void OnStateExit()
         {
             base.OnStateExit();
-            Debug.Log("Exiting Patrol");
-
         }
     }
 }
