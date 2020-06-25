@@ -19,6 +19,8 @@ namespace AchievementSO
                 Terminator,
                 Destroyer
             }
+            public string name;
+            public string info;
             public BulletAchievements SelectAchievement;
             public int requirement;
         }

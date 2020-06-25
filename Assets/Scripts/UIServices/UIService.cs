@@ -2,13 +2,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using TankServices;
+
 
 public class UIService : GenericMonoSingleton<UIService>
 {
+    public Image PopUpImage;
     public TextMeshProUGUI PopUpText;
+    public TextMeshProUGUI AchievementInfoText;
     public TextMeshProUGUI HealthText;
     public TextMeshProUGUI ScoreText;
+    public Image PausePanel;
     private int currentScore;
 
     private void Start()
@@ -16,13 +19,29 @@ public class UIService : GenericMonoSingleton<UIService>
         currentScore = 0;
         ScoreText.text = "Score:" + currentScore.ToString();
     }
-    public async void ShowPopUpText(string text, float timeForPopUp)
+    private void Update()
     {
-        PopUpText.enabled = true;
-        PopUpText.text = text;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PausePanel.gameObject.SetActive(true);
+        }
+    }
+    public async void ShowPopUpText(string name, string achievementInfo, float timeForPopUp, bool isAchievement = false)
+    {
+        if (isAchievement)
+        {
+            PopUpText.text = "Achievement Unlocked!\n";
+            AchievementInfoText.text = achievementInfo;
+        }
+
+        PopUpImage.gameObject.SetActive(true);
+        PopUpText.text = PopUpText.text + name;
         await new WaitForSeconds(timeForPopUp);
         PopUpText.text = null;
-        PopUpText.enabled = false;
+        if (isAchievement)
+            achievementInfo = null;
+        PopUpImage.gameObject.SetActive(false);
+
     }
 
     public void UpdateScoreText(int scoreMultiplier = 1)

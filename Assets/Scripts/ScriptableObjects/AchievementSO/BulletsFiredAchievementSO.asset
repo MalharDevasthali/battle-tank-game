@@ -13,11 +13,19 @@ MonoBehaviour:
   m_Name: BulletsFiredAchievementSO
   m_EditorClassIdentifier: 
   Tiers:
-  - SelectAchievement: 1
+  - name: Shooter
+    info: Fired 10 Bullets
+    SelectAchievement: 1
     requirement: 10
-  - SelectAchievement: 2
+  - name: Pro Shooter
+    info: Fired 25 Bullets
+    SelectAchievement: 2
     requirement: 25
-  - SelectAchievement: 3
+  - name: Shoot Blooded
+    info: Fired 50 Bullets
+    SelectAchievement: 3
     requirement: 50
-  - SelectAchievement: 4
+  - name: Born to Shoot
+    info: Fired 100 Bullets
+    SelectAchievement: 4
     requirement: 100

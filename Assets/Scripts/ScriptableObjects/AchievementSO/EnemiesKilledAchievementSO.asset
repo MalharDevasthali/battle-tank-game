@@ -13,11 +13,19 @@ MonoBehaviour:
   m_Name: EnemiesKilledAchievementSO
   m_EditorClassIdentifier: 
   Tiers:
-  - SelectAchievement: 1
+  - name: Killer
+    info: Killed 1st Enemy!
+    SelectAchievement: 1
     requirement: 1
-  - SelectAchievement: 2
+  - name: Serial Killer
+    info: Killed 3 Enemies
+    SelectAchievement: 2
     requirement: 3
-  - SelectAchievement: 3
+  - name: Terminator
+    info: Killed 5 Enemies
+    SelectAchievement: 3
     requirement: 5
-  - SelectAchievement: 4
+  - name: Destroyer
+    info: Kill 10 Enemies
+    SelectAchievement: 4
     requirement: 10

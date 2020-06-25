@@ -14,11 +14,13 @@ namespace AchievementSO
             public enum BulletAchievements
             {
                 None,
-                BulletsLover_I,
-                BulletsLover_II,
-                BulletsLover_III,
-                BulletsLover_IV,
+                Gunner,
+                SubMachineGunner,
+                HeavyMachineGunner,
+                ShellThrower,
             }
+            public string name;
+            public string info;
             public BulletAchievements SelectAchievement;
             public int requirement;
         }

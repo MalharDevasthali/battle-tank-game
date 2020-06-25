@@ -24,7 +24,7 @@ namespace AchievementServices
                 if (i != currentBulletFiredAchievementTier) continue;
                 if (TankService.instance.GetCurrentTankModel().BulletsFired == model.BulletsFiredAchievement.Tiers[i].requirement)
                 {
-                    UnlockAchievement(model.BulletsFiredAchievement.Tiers[i].SelectAchievement.ToString());
+                    UnlockAchievement(model.BulletsFiredAchievement.Tiers[i].name, model.BulletsFiredAchievement.Tiers[i].info);
                     currentBulletFiredAchievementTier = i + 1;
                     PlayerPrefs.SetInt("currentBulletFiredAchievementTier", currentBulletFiredAchievementTier);
                 }
@@ -39,7 +39,7 @@ namespace AchievementServices
                 if (i != currentEnemiesKilledtAchievementTier) continue;
                 if (TankService.instance.GetCurrentTankModel().EnemiesKilled == model.EnemiesKilledAchievement.Tiers[i].requirement)
                 {
-                    UnlockAchievement(model.EnemiesKilledAchievement.Tiers[i].SelectAchievement.ToString());
+                    UnlockAchievement(model.EnemiesKilledAchievement.Tiers[i].name, model.EnemiesKilledAchievement.Tiers[i].info);
                     currentEnemiesKilledtAchievementTier = i + 1;
                     PlayerPrefs.SetInt("currentEnemiesKilledtAchievementTier", currentEnemiesKilledtAchievementTier);
                 }
@@ -47,10 +47,9 @@ namespace AchievementServices
             }
         }
 
-        private void UnlockAchievement(string achievementName)
+        private void UnlockAchievement(string achievementName, string achievementInfo)
         {
-            Debug.Log(achievementName + "Unlocked");
-            UIService.instance.ShowPopUpText(achievementName, 2f);
+            UIService.instance.ShowPopUpText(achievementName, achievementInfo, 3f, true);
         }
     }
 }

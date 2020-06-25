@@ -13,6 +13,8 @@ namespace TankServices
 
         public GameObject TankDestroyVFX;
 
+        public AudioClip TankDestroySFX;
+
         //floats
         private float rotation;
         private float movement;
