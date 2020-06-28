@@ -5,6 +5,8 @@ using BulletSO;
 using VFXServices;
 using AchievementServices;
 using SFXServices;
+using GameServices;
+using UIServices;
 
 namespace TankServices
 {
@@ -13,6 +15,7 @@ namespace TankServices
         public TankModel tankModel { get; private set; }
         public TankView tankView { get; private set; }
         private Rigidbody rigidbody;
+
 
         public TankController(TankModel _tankModel, TankView _tankView) //constructor
         {
@@ -27,9 +30,6 @@ namespace TankServices
             SubscribeEvents();
             UIService.instance.UpdateHealthText(tankModel.health);
         }
-
-
-
         private void SubscribeEvents()
         {
             EventService.instance.OnPlayerFiredBullet += UpdateBulletsFiredCounter;
@@ -50,9 +50,11 @@ namespace TankServices
 
         public void ShootBullet()
         {
+            SFXService.instance.PlaySoundAtTrack1(tankView.BulletShootSFX, 1f, 64, true);
             EventService.instance.InvokeOnPlayerFiredBulletEvent();
             BulletService.instance.CreateBullet(GetFiringPosition(), GetFiringAngle(), GetBullet());
         }
+
 
         private void UpdateBulletsFiredCounter()
         {
@@ -81,7 +83,8 @@ namespace TankServices
 
         public void DestroyController()
         {
-            // SFXService.instance.PlaySound()
+            GameService.instance.CheckForHighScore();
+            SFXService.instance.PlaySoundAtTrack1(tankView.TankDestroySFX, 1f, 10, true);
             VFXService.instance.InstantiateEffects(tankView.TankDestroyVFX, tankView.transform.position);
             UIService.instance.ResetScore();
             tankModel.DestroyModel();
@@ -102,12 +105,13 @@ namespace TankServices
         }
         public void ApplyDamage(float damage)
         {
-            if (tankModel.health - damage <= 0)
-                Dead();
-            else
+            tankModel.health -= damage;
+            Debug.Log(tankModel.health);
+            UIService.instance.UpdateHealthText(tankModel.health);
+
+            if (tankModel.health <= 0)
             {
-                tankModel.health -= damage;
-                UIService.instance.UpdateHealthText(tankModel.health);
+                Dead();
             }
         }
     }

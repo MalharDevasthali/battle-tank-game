@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using TankServices;
 using UnityEngine;
-using UnityEngine.AI;
+using GameServices;
 
 namespace EnemyServices
 {
@@ -31,6 +30,7 @@ namespace EnemyServices
         private void OnTriggerStay(Collider other)
         {
             if (enemyView.activeState == EnemyState.Attacking || !canChase) return;
+
 
             if (other.gameObject.GetComponent<TankView>() != null)
                 Chase();

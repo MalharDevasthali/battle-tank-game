@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 585031579}
   - component: {fileID: 8928004279681267080}
   - component: {fileID: 1822630005344170832}
-  - component: {fileID: 9040902953942220149}
+  - component: {fileID: 1352922723}
   m_Layer: 0
   m_Name: ServiceHolder
   m_TagString: Untagged
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allAchievements: {fileID: 11400000, guid: c1a6f559b384eae4da65a086a650f406, type: 2}
---- !u!114 &9040902953942220149
+--- !u!114 &1352922723
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,6 +122,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1454581327071241424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 916998ed00497ce43835c593b5f4ef4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 871a2d406423ab54b8eab3222ce2916f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gamePaused: 0
+  gameOver: 0

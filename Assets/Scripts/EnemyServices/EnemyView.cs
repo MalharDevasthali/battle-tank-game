@@ -33,6 +33,7 @@ namespace EnemyServices
             InitializeState();
         }
 
+
         public void SetEnemyController(EnemyController _controller)
         {
             controller = _controller;

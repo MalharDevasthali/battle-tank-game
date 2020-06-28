@@ -354,6 +354,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TankDestroyVFX: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 3}
+  TankDestroySFX: {fileID: 8300000, guid: 5c27182a28a7eb942a362e6d198fe0e6, type: 3}
+  BulletShootSFX: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
+  TankIdleSFX: {fileID: 8300000, guid: 4932ab25b84dd7649b80af68a9660ddc, type: 3}
+  TankMovingSFX: {fileID: 8300000, guid: d7ca9fb5aa30155449192b23d7fb3336, type: 3}
   BulletShootPoint: {fileID: 631510810186047704}
   childs:
   - {fileID: 6652000944144991900}

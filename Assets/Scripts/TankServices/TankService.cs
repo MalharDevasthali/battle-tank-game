@@ -11,6 +11,8 @@ namespace TankServices
     {
         public TankSOList tankList;
         private TankModel currentTankModel;
+        private TankController tankController;
+
         public TankScriptableObject tankScriptable { get; private set; }
         private List<TankController> tanks = new List<TankController>();
 
@@ -28,13 +30,17 @@ namespace TankServices
 
             TankModel tankModel = new TankModel(tankScriptable, tankList);
             currentTankModel = tankModel;
-            TankController controller = new TankController(tankModel, tankScriptable.tankView);
-            tanks.Add(controller);
+            tankController = new TankController(tankModel, tankScriptable.tankView);
+            tanks.Add(tankController);
         }
 
         public TankModel GetCurrentTankModel()
         {
             return currentTankModel;
+        }
+        public TankController GetTankController()
+        {
+            return tankController;
         }
 
         public async void DestroyTank(TankController tank)
@@ -50,6 +56,27 @@ namespace TankServices
             }
             await new WaitForSeconds(4f);
             CreateTank();
+        }
+        public void TurnONTanks()
+        {
+            for (int i = 0; i < tanks.Count; i++)
+            {
+                if (tanks[i] != null)
+                {
+                    tanks[i].tankView.gameObject.SetActive(true);
+
+                }
+            }
+        }
+        public void TurnOFFTanks()
+        {
+            for (int i = 0; i < tanks.Count; i++)
+            {
+                if (tanks[i] != null)
+                {
+                    tanks[i].tankView.gameObject.SetActive(false);
+                }
+            }
         }
     }
 }

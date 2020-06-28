@@ -1,27 +1,30 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using BulletServices;
+using SFXServices;
+using GameServices;
+
 using Commons;
 
 namespace TankServices
 {
     public class TankView : MonoBehaviour, IDamagable
     {
-        //references
-        private TankController tankController;
 
+        [Header("VFX and SFX References")]
         public GameObject TankDestroyVFX;
-
         public AudioClip TankDestroySFX;
+        public AudioClip BulletShootSFX;
+        public AudioClip TankIdleSFX;
+        public AudioClip TankMovingSFX;
 
-        //floats
+
         private float rotation;
         private float movement;
         private float canFire = 0f;
+        [Header("Movement and Shooting")]
         public Transform BulletShootPoint;
-
         public MeshRenderer[] childs;
+
+        private TankController tankController;
 
         public void SetTankController(TankController _tankController)
         {
@@ -36,7 +39,14 @@ namespace TankServices
         private void FixedUpdate()
         {
             if (movement != 0)
+            {
                 tankController.Move(movement, tankController.tankModel.movementSpeed);
+                SFXService.instance.PlaySoundAtTrack2(TankMovingSFX, 0.1f, 256, false);
+            }
+            else
+            {
+                SFXService.instance.PlaySoundAtTrack2(TankIdleSFX, 0.1f, 256, false);
+            }
 
             if (rotation != 0)
                 tankController.Rotate(rotation, tankController.tankModel.rotationSpeed);
@@ -69,9 +79,11 @@ namespace TankServices
             for (int i = 0; i < childs.Length; i++)
                 childs[i] = null;
 
+
             tankController = null;
             BulletShootPoint = null;
             TankDestroyVFX = null;
+
             Destroy(this.gameObject);
         }
 

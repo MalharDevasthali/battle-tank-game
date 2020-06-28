@@ -12,21 +12,30 @@ namespace EnemyServices
     {
         public EnemySOList enemyTypes;
         [HideInInspector] public EnemyScriptableObject enemy;
-        private List<EnemyController> enemies = new List<EnemyController>();
+        public List<EnemyController> enemies = new List<EnemyController>();
         private Coroutine respawn;
+        private EnemyController enemyController;
 
         private async void Start()
         {
-            await new WaitForEndOfFrame();
+            await new WaitForSeconds(1f);
             CreateEnemy();
+
         }
 
         private void CreateEnemy()
         {
+
             enemy = enemyTypes.enemies[0];
+
             EnemyModel enemyModel = new EnemyModel(enemy);
-            EnemyController controller = new EnemyController(enemy.enemyView, enemyModel);
-            enemies.Add(controller);
+            enemyController = new EnemyController(enemy.enemyView, enemyModel);
+
+            enemies.Add(enemyController);
+        }
+        public EnemyController GetEnemyController()
+        {
+            return enemyController;
         }
 
         public void DestroyEnemy(EnemyController enemy)
@@ -53,6 +62,26 @@ namespace EnemyServices
             {
                 StopCoroutine(respawn);
                 respawn = null;
+            }
+        }
+        public void TurnOFFEnemies()
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (enemies[i] != null)
+                {
+                    enemies[i].view.gameObject.SetActive(false);
+                }
+            }
+        }
+        public void TurnONEnmeis()
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (enemies[i] != null)
+                {
+                    enemies[i].view.gameObject.SetActive(true);
+                }
             }
         }
     }
