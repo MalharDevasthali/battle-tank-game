@@ -16,9 +16,5 @@ namespace BulletSO
         public BulletType bulletType;
 
     }
-    [CreateAssetMenu(fileName = "BulletScriptableObject", menuName = "ScriptableObject/Bullet/NewBulletScriptableObjectList")]
-    public class BulletScriptableObjectList : ScriptableObject
-    {
-        public BulletScriptableObject[] bulletsTypes;
-    }
+
 }

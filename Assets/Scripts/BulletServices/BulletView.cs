@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using System;
 using Commons;
+using SFXServices;
 
 namespace BulletServices
 {
@@ -10,6 +11,7 @@ namespace BulletServices
         public BulletController bulletController { get; private set; }
 
         public GameObject BullectDestroyVFX;
+        public AudioClip BulletDestorySFX;
         public void SetBulletController(BulletController _bulletController)
         {
             bulletController = _bulletController;
@@ -19,16 +21,10 @@ namespace BulletServices
         {
             bulletController.Movement();
         }
-        private async void Start()
-        {
-            //write synchronous stuff for start() above this line --^
-            await Task.Delay(TimeSpan.FromSeconds(2f));
-            if (bulletController != null)
-                BulletService.instance.DestroyBullet(bulletController);
-        }
 
         private void OnCollisionEnter(Collision other)
         {
+            SFXService.instance.PlaySoundAtTrack1(BulletDestorySFX, 2, 20, true);
             if (bulletController != null)
             {
                 IDamagable iDamagable = other.gameObject.GetComponent<IDamagable>();

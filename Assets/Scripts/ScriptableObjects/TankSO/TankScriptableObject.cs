@@ -1,4 +1,4 @@
-using System;
+
 using UnityEngine;
 using TankServices;
 using BulletSO;
@@ -25,12 +25,5 @@ namespace TankSO
         public float fireRate;
         public BulletScriptableObject bulletType;
         public Material material;
-    }
-
-    [CreateAssetMenu(fileName = "TankScriptableObject", menuName = "ScriptableObject/Tank/TankScriptableObjectList")]
-    public class TankScriptableObjectList : ScriptableObject
-    {
-        public TankScriptableObject[] tanks;
-
     }
 }

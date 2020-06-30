@@ -3,30 +3,56 @@ using System.Collections;
 using System.Collections.Generic;
 using Commons;
 using EnemySO;
-using System;
-using System.Threading.Tasks;
+using TankServices;
+using GameServices;
+using UIServices;
+using AchievementServices;
 
 namespace EnemyServices
 {
     public class EnemyService : GenericMonoSingleton<EnemyService>
     {
-        public EnemykScriptableObjectList enemyTypes;
+        public EnemySOList enemyTypes;
         [HideInInspector] public EnemyScriptableObject enemy;
-        private List<EnemyController> enemies = new List<EnemyController>();
-        private Coroutine respawn;
+        public List<EnemyController> enemies = new List<EnemyController>();
+        private EnemyController enemyController;
 
-        private async void Start()
+
+        public void SpawnWave(float enemyCount)
         {
-            await new WaitForEndOfFrame();
-            CreateEnemy();
+
+            for (int i = 0; i < enemyCount; i++)
+            {
+                CreateEnemy();
+            }
+            SubEvent();
+        }
+        private void SubEvent()
+        {
+            EventService.instance.OnEnemyDeath += UpdateEnemiesKilledCount;
+        }
+        private void UpdateEnemiesKilledCount()
+        {
+            TankService.instance.GetCurrentTankModel().EnemiesKilled += 1;
+            PlayerPrefs.SetInt("EnemiesKilled", TankService.instance.GetCurrentTankModel().EnemiesKilled);
+            Debug.Log(TankService.instance.GetCurrentTankModel().EnemiesKilled);
+            UIService.instance.UpdateScoreText();
+            AchievementService.instance.GetAchievementController().CheckForEnemiesKilledAchievement();
         }
 
         private void CreateEnemy()
         {
+
             enemy = enemyTypes.enemies[0];
+
             EnemyModel enemyModel = new EnemyModel(enemy);
-            EnemyController controller = new EnemyController(enemy.enemyView, enemyModel);
-            enemies.Add(controller);
+            enemyController = new EnemyController(enemy.enemyView, enemyModel);
+
+            enemies.Add(enemyController);
+        }
+        public EnemyController GetEnemyController()
+        {
+            return enemyController;
         }
 
         public void DestroyEnemy(EnemyController enemy)
@@ -41,18 +67,38 @@ namespace EnemyServices
                     enemies.Remove(enemies[i]);
                 }
             }
-            respawn = StartCoroutine(RespawnEnemy());
+            if (enemies.Count == 0)
+            {
+                UnsubscribeEvents();
+                GameService.instance.SpawnWave();
+            }
 
         }
-
-        private IEnumerator RespawnEnemy()
+        private void UnsubscribeEvents()
         {
-            yield return new WaitForSeconds(4f);
-            CreateEnemy();
-            if (respawn != null)
+            Debug.Log("Unscub");
+            EventService.instance.OnEnemyDeath -= UpdateEnemiesKilledCount;
+        }
+
+
+        public void TurnOFFEnemies()
+        {
+            for (int i = 0; i < enemies.Count; i++)
             {
-                StopCoroutine(respawn);
-                respawn = null;
+                if (enemies[i] != null)
+                {
+                    enemies[i].view.gameObject.SetActive(false);
+                }
+            }
+        }
+        public void TurnONEnmeis()
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (enemies[i] != null)
+                {
+                    enemies[i].view.gameObject.SetActive(true);
+                }
             }
         }
     }

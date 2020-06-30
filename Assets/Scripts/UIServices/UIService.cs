@@ -2,33 +2,82 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using TankServices;
+using GameServices;
 
-public class UIService : GenericMonoSingleton<UIService>
+namespace UIServices
 {
-    public TextMeshProUGUI PopUpText;
-    public TextMeshProUGUI HealthText;
-    public TextMeshProUGUI ScoreText;
 
-
-    public async void ShowPopUpText(string text, float timeForPopUp)
+    public class UIService : GenericMonoSingleton<UIService>
     {
-        PopUpText.enabled = true;
-        PopUpText.text = text;
-        await new WaitForSeconds(timeForPopUp);
-        PopUpText.text = null;
-        PopUpText.enabled = false;
-    }
+        public Image PopUpImage;
+        public TextMeshProUGUI PopUpText;
+        public TextMeshProUGUI AchievementInfoText;
+        public TextMeshProUGUI HealthText;
+        public TextMeshProUGUI ScoreText;
+        public GameObject PausePanel;
+        private int currentScore;
 
-    public void UpdateScoreText(int currentScore, int scoreMultiplier = 1)
-    {
-        int finalScore = (currentScore * 10) * scoreMultiplier;
-        ScoreText.text = "Score: " + finalScore.ToString();
+        private void Start()
+        {
+            currentScore = 0;
+            ScoreText.text = "Score:" + currentScore.ToString();
+        }
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && !GameService.instance.gamePaused)
+            {
 
-    }
+                GameService.instance.GamePaused();
+                PausePanel.SetActive(true);
+            }
+            else if (GameService.instance.gamePaused && Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameService.instance.GameResumed();
+                PausePanel.SetActive(false);
+            }
+        }
+        public async void ShowPopUpText(string name, float timeForPopUp, string achievementInfo = null, bool isAchievement = false)
+        {
+            GameService.instance.GamePaused();
+            if (isAchievement)
+            {
+                PopUpText.text = "Achievement Unlocked!\n";
+                AchievementInfoText.text = achievementInfo;
+            }
 
-    public void UpdateHealthText(float currentHealth)
-    {
-        HealthText.text = "Health: " + currentHealth.ToString();
+            PopUpImage.gameObject.SetActive(true);
+            PopUpText.text = PopUpText.text + name;
+            await new WaitForSeconds(timeForPopUp);
+            PopUpText.text = null;
+            if (isAchievement)
+                achievementInfo = null;
+            PopUpImage.gameObject.SetActive(false);
+            GameService.instance.GameResumed();
+
+
+        }
+        public int GetCurrentScore()
+        {
+            return currentScore;
+        }
+
+        public void UpdateScoreText(int scoreMultiplier = 1)
+        {
+            int finalScore = (currentScore + 10) * scoreMultiplier;
+            currentScore = finalScore;
+            ScoreText.text = "Score: " + finalScore.ToString();
+
+        }
+        public void ResetScore()
+        {
+            currentScore = 0;
+            ScoreText.text = "Score: " + currentScore.ToString();
+        }
+
+        public void UpdateHealthText(float currentHealth)
+        {
+            if (currentHealth < 0) currentHealth = 0;
+            HealthText.text = "Health: " + currentHealth.ToString();
+        }
     }
 }
