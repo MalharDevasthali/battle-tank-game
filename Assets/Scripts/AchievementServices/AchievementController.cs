@@ -50,7 +50,7 @@ namespace AchievementServices
 
         private void UnlockAchievement(string achievementName, string achievementInfo)
         {
-            UIService.instance.ShowPopUpText(achievementName, achievementInfo, 3f, true);
+            UIService.instance.ShowPopUpText(achievementName, 3f, achievementInfo, true);
         }
     }
 }

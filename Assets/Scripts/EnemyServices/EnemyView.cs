@@ -12,6 +12,10 @@ namespace EnemyServices
         [Header("Shooting")]
         public Transform shootingPoint;
 
+
+        [Header("SFX")]
+
+        public AudioClip destorySound;
         [Header("States")]
         public EnemyPatrollingState patrollingState;
         public EnemyChasingState chasingState;

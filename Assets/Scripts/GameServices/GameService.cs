@@ -4,6 +4,7 @@ using EnemyServices;
 using SFXServices;
 using UIServices;
 using TankServices;
+using UnityEngine.SceneManagement;
 namespace GameServices
 {
     public class GameService : GenericMonoSingleton<GameService>
@@ -13,15 +14,29 @@ namespace GameServices
         private string currentPlayerName;
         private int highScore;
         private string recordHolderName;
+        private float currentWave;
+
 
         private void Start()
         {
-
-            //  PlayerPrefs.SetInt("highScore", 0);
+            currentWave = 0;
             highScore = PlayerPrefs.GetInt("highScore", 0);
             currentPlayerName = PlayerPrefs.GetString("currentPlayerName", "");
-            //  PlayerPrefs.SetString("recordHolderName", "Malhar Devasthali");
             recordHolderName = PlayerPrefs.GetString("recordHolderName", "-");
+            SpawnWave();
+        }
+
+        async public void SpawnWave()
+        {
+            currentWave++;
+            UIService.instance.ShowPopUpText("Wave " + currentWave.ToString() + " incomeing....", 3f);
+            float enemyiesTobeSpawned = Mathf.Pow(2, (currentWave - 1));
+            await new WaitForSeconds(2f);
+            EnemyService.instance.SpawnWave(enemyiesTobeSpawned);
+        }
+        public void RestartGame()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         public void GamePaused()
@@ -37,21 +52,18 @@ namespace GameServices
         {
             currentPlayerName = name;
             PlayerPrefs.SetString("currentPlayerName", currentPlayerName);
-            Debug.Log(PlayerPrefs.GetString("currentPlayerName"));
-        }
-        private string GetCurrentPlayerName()
-        {
-            return currentPlayerName;
         }
         public void CheckForHighScore()
         {
             if (UIService.instance.GetCurrentScore() > highScore)
             {
                 PlayerPrefs.SetInt("highScore", UIService.instance.GetCurrentScore());
-                highScore = UIService.instance.GetCurrentScore();
                 PlayerPrefs.SetString("recordHolderName", PlayerPrefs.GetString("currentPlayerName"));
-                recordHolderName = GetCurrentPlayerName();
+                recordHolderName = PlayerPrefs.GetString("recordHolderName");
+                highScore = PlayerPrefs.GetInt("highScore");
+
             }
+            RestartGame();
         }
         public void GameResumed()
         {
@@ -61,23 +73,14 @@ namespace GameServices
 
             gamePaused = false;
         }
-        public void SetHighScore(int _highScore)
-        {
-            highScore = _highScore;
-            PlayerPrefs.SetInt("highScore", highScore);
-        }
-        public void SetRecordHolder(string name)
-        {
-            recordHolderName = name;
-            PlayerPrefs.SetString("recordHolderName", recordHolderName);
-        }
         public string GetHighScore()
         {
-            return highScore.ToString();
+
+            return PlayerPrefs.GetInt("highScore").ToString();
         }
         public string GetRecordHolder()
         {
-            return recordHolderName;
+            return PlayerPrefs.GetString("recordHolderName");
         }
 
     }

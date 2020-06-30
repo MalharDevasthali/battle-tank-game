@@ -36,8 +36,9 @@ namespace UIServices
                 PausePanel.SetActive(false);
             }
         }
-        public async void ShowPopUpText(string name, string achievementInfo, float timeForPopUp, bool isAchievement = false)
+        public async void ShowPopUpText(string name, float timeForPopUp, string achievementInfo = null, bool isAchievement = false)
         {
+            GameService.instance.GamePaused();
             if (isAchievement)
             {
                 PopUpText.text = "Achievement Unlocked!\n";
@@ -51,6 +52,8 @@ namespace UIServices
             if (isAchievement)
                 achievementInfo = null;
             PopUpImage.gameObject.SetActive(false);
+            GameService.instance.GameResumed();
+
 
         }
         public int GetCurrentScore()

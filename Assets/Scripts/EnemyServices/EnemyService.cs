@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Commons;
 using EnemySO;
-using System;
-using System.Threading.Tasks;
+using TankServices;
+using GameServices;
+using UIServices;
+using AchievementServices;
 
 namespace EnemyServices
 {
@@ -13,14 +15,29 @@ namespace EnemyServices
         public EnemySOList enemyTypes;
         [HideInInspector] public EnemyScriptableObject enemy;
         public List<EnemyController> enemies = new List<EnemyController>();
-        private Coroutine respawn;
         private EnemyController enemyController;
 
-        private async void Start()
-        {
-            await new WaitForSeconds(1f);
-            CreateEnemy();
 
+        public void SpawnWave(float enemyCount)
+        {
+
+            for (int i = 0; i < enemyCount; i++)
+            {
+                CreateEnemy();
+            }
+            SubEvent();
+        }
+        private void SubEvent()
+        {
+            EventService.instance.OnEnemyDeath += UpdateEnemiesKilledCount;
+        }
+        private void UpdateEnemiesKilledCount()
+        {
+            TankService.instance.GetCurrentTankModel().EnemiesKilled += 1;
+            PlayerPrefs.SetInt("EnemiesKilled", TankService.instance.GetCurrentTankModel().EnemiesKilled);
+            Debug.Log(TankService.instance.GetCurrentTankModel().EnemiesKilled);
+            UIService.instance.UpdateScoreText();
+            AchievementService.instance.GetAchievementController().CheckForEnemiesKilledAchievement();
         }
 
         private void CreateEnemy()
@@ -50,20 +67,20 @@ namespace EnemyServices
                     enemies.Remove(enemies[i]);
                 }
             }
-            respawn = StartCoroutine(RespawnEnemy());
-
-        }
-
-        private IEnumerator RespawnEnemy()
-        {
-            yield return new WaitForSeconds(4f);
-            CreateEnemy();
-            if (respawn != null)
+            if (enemies.Count == 0)
             {
-                StopCoroutine(respawn);
-                respawn = null;
+                UnsubscribeEvents();
+                GameService.instance.SpawnWave();
             }
+
         }
+        private void UnsubscribeEvents()
+        {
+            Debug.Log("Unscub");
+            EventService.instance.OnEnemyDeath -= UpdateEnemiesKilledCount;
+        }
+
+
         public void TurnOFFEnemies()
         {
             for (int i = 0; i < enemies.Count; i++)

@@ -6,6 +6,7 @@ using Commons;
 using UIServices;
 using TankServices;
 using AchievementServices;
+using SFXServices;
 
 namespace EnemyServices
 {
@@ -22,7 +23,6 @@ namespace EnemyServices
             view = GameObject.Instantiate<EnemyView>(_view, GetRandomPosition(), Quaternion.identity);
             model.SetEnemyController(this);
             view.SetEnemyController(this);
-            SubscribeEvents();
         }
         public Vector3 GetRandomPosition()
         {
@@ -33,19 +33,7 @@ namespace EnemyServices
             return navHit.position;
         }
 
-        private void SubscribeEvents()
-        {
-            EventService.instance.OnEnemyDeath += UpdateEnemiesKilledCount;
-        }
 
-        private void UpdateEnemiesKilledCount()
-        {
-            TankService.instance.GetCurrentTankModel().EnemiesKilled += 1;
-            PlayerPrefs.SetInt("EnemiesKilled", TankService.instance.GetCurrentTankModel().EnemiesKilled);
-            Debug.Log(TankService.instance.GetCurrentTankModel().EnemiesKilled);
-            UIService.instance.UpdateScoreText();
-            AchievementService.instance.GetAchievementController().CheckForEnemiesKilledAchievement();
-        }
 
         public void Attack()
         {
@@ -83,11 +71,10 @@ namespace EnemyServices
         }
         public void ApplyDamage(float damage)
         {
-            if (model.health < 0) return;
+            if (model.health <= 0) return;
 
             if (model.health - damage <= 0)
             {
-                Debug.Log("in Death");
                 Dead();
             }
             else
@@ -95,16 +82,14 @@ namespace EnemyServices
         }
         public void DestoryController()
         {
+            SFXService.instance.PlayEnemyTrack(view.destorySound, 1, 10);
             VFXService.instance.InstantiateEffects(view.TankDestroyVFX, view.transform.position);
             model.DestroyModel();
             view.DestroyView();
             model = null;
             view = null;
-            UnsubscribeEvents();
+
         }
-        private void UnsubscribeEvents()
-        {
-            EventService.instance.OnEnemyDeath -= UpdateEnemiesKilledCount;
-        }
+
     }
 }

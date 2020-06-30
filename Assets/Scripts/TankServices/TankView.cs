@@ -1,5 +1,6 @@
 using UnityEngine;
 using SFXServices;
+using UIServices;
 using GameServices;
 
 using Commons;
@@ -41,11 +42,11 @@ namespace TankServices
             if (movement != 0)
             {
                 tankController.Move(movement, tankController.tankModel.movementSpeed);
-                SFXService.instance.PlaySoundAtTrack2(TankMovingSFX, 0.1f, 256, false);
+                SFXService.instance.MovingSoundTrack(TankMovingSFX, 0.1f, 256, false);
             }
             else
             {
-                SFXService.instance.PlaySoundAtTrack2(TankIdleSFX, 0.1f, 256, false);
+                SFXService.instance.MovingSoundTrack(TankIdleSFX, 0.1f, 256, false);
             }
 
             if (rotation != 0)
@@ -78,14 +79,12 @@ namespace TankServices
         {
             for (int i = 0; i < childs.Length; i++)
                 childs[i] = null;
-
-
             tankController = null;
             BulletShootPoint = null;
             TankDestroyVFX = null;
-
             Destroy(this.gameObject);
         }
+
 
         public void TakeDamage(float damage)
         {

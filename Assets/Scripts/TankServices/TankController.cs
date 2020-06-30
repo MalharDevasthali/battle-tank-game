@@ -60,7 +60,6 @@ namespace TankServices
         {
             tankModel.BulletsFired += 1;
             PlayerPrefs.SetInt("BulletsFired", tankModel.BulletsFired);
-            Debug.Log(tankModel.BulletsFired);
             AchievementService.instance.GetAchievementController().CheckForBulletFiredAchievement();
         }
 
@@ -106,7 +105,6 @@ namespace TankServices
         public void ApplyDamage(float damage)
         {
             tankModel.health -= damage;
-            Debug.Log(tankModel.health);
             UIService.instance.UpdateHealthText(tankModel.health);
 
             if (tankModel.health <= 0)
