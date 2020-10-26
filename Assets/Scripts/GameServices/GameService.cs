@@ -53,7 +53,6 @@ namespace GameServices
                 recordHolderName = PlayerPrefs.GetString("recordHolderName");
                 highScore = UIService.instance.GetCurrentScore();
             }
-            RestartGame();
         }
         public void GameResumed()
         {

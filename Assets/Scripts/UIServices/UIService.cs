@@ -11,7 +11,9 @@ namespace UIServices
     {
         public Image PopUpImage;
         public TextMeshProUGUI PopUpText;
+        public TextMeshProUGUI AchivementNameText;
         public TextMeshProUGUI AchievementInfoText;
+        public Image AchievementImage;
         public TextMeshProUGUI HealthText;
         public TextMeshProUGUI ScoreText;
         public GameObject PausePanel;
@@ -55,9 +57,22 @@ namespace UIServices
             GameService.instance.GameResumed();
 
         }
+        public async void ShowAchievementUnlocked(string name, string achievementInfo, float timeForPopUp)
+        {
+            GameService.instance.GamePaused();
+            AchivementNameText.text = "Achievement Unlocked!\n";
+            AchievementInfoText.text = achievementInfo;
+            AchievementImage.gameObject.SetActive(true);
+            AchivementNameText.text = AchivementNameText.text + name;
+            await new WaitForSeconds(timeForPopUp);
+            AchivementNameText.text = null;
+            AchievementImage.gameObject.SetActive(false);
+            GameService.instance.GameResumed();
+        }
         public void ShowGameOverUI()
         {
-
+            GameService.instance.GamePaused();
+            GameOverPanel.SetActive(true);
         }
         public int GetCurrentScore()
         {

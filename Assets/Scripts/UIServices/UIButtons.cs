@@ -43,7 +43,5 @@ namespace UIServices
             audioSource.Play();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-
-
     }
 }

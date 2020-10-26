@@ -90,6 +90,7 @@ namespace TankServices
             tankView = null;
             rigidbody = null;
             UnSubscribeEvents();
+            UIService.instance.ShowGameOverUI();
         }
         private void UnSubscribeEvents()
         {

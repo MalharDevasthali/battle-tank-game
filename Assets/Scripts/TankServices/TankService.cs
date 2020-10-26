@@ -75,7 +75,8 @@ namespace TankServices
             {
                 if (tanks[i] != null)
                 {
-                    tanks[i].tankView.gameObject.SetActive(false);
+                    if (tanks[i].tankView)
+                        tanks[i].tankView.gameObject.SetActive(false);
                 }
             }
         }
