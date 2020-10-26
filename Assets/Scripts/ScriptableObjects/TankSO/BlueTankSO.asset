@@ -15,7 +15,7 @@ MonoBehaviour:
   tankType: 2
   tankView: {fileID: 6652000942803677053, guid: 3405bd501ffbbea428c44ae40a6188c0,
     type: 3}
-  health: 150
+  health: 200
   movementSpeed: 7.5
   rotationSpeed: 75
   fireRate: 1

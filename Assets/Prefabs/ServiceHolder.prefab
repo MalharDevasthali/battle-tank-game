@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tankList: {fileID: 11400000, guid: e5ae14d13c99ff446bd29aec68bc1949, type: 2}
+  tankSpawnDelay: 3
 --- !u!114 &5158544930746108020
 MonoBehaviour:
   m_ObjectHideFlags: 0

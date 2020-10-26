@@ -11,7 +11,7 @@ namespace GameServices
     {
         public bool gamePaused = false;
         public bool gameOver = false;
-        private string currentPlayerName;
+        static private string currentPlayerName;
         private int highScore;
         private string recordHolderName;
         private float currentWave;
@@ -20,19 +20,8 @@ namespace GameServices
         private void Start()
         {
             currentWave = 0;
-            highScore = PlayerPrefs.GetInt("highScore", 0);
-            currentPlayerName = PlayerPrefs.GetString("currentPlayerName", "");
-            recordHolderName = PlayerPrefs.GetString("recordHolderName", "-");
-            SpawnWave();
-        }
-
-        async public void SpawnWave()
-        {
-            currentWave++;
-            UIService.instance.ShowPopUpText("Wave " + currentWave.ToString() + " incomeing....", 3f);
-            float enemyiesTobeSpawned = Mathf.Pow(2, (currentWave - 1));
-            await new WaitForSeconds(2f);
-            EnemyService.instance.SpawnWave(enemyiesTobeSpawned);
+            highScore = PlayerPrefs.GetInt("highScore", PlayerPrefs.GetInt("highScore"));
+            recordHolderName = PlayerPrefs.GetString("recordHolderName", PlayerPrefs.GetString("recordHolderName"));
         }
         public void RestartGame()
         {
@@ -41,37 +30,37 @@ namespace GameServices
 
         public void GamePaused()
         {
-
+            gamePaused = true;
             SFXService.instance.TurnOffSoundsExceptUI();
             EnemyService.instance.TurnOFFEnemies();
             TankService.instance.TurnOFFTanks();
-
-            gamePaused = true;
         }
         public void SetCurrentPlayerName(string name)
         {
             currentPlayerName = name;
-            PlayerPrefs.SetString("currentPlayerName", currentPlayerName);
+            Debug.Log("GameService, SetCurrentPlayerName() ->" + currentPlayerName);
+            // PlayerPrefs.SetString("currentPlayerName", currentPlayerName);
         }
         public void CheckForHighScore()
         {
+
             if (UIService.instance.GetCurrentScore() > highScore)
             {
-                PlayerPrefs.SetInt("highScore", UIService.instance.GetCurrentScore());
-                PlayerPrefs.SetString("recordHolderName", PlayerPrefs.GetString("currentPlayerName"));
-                recordHolderName = PlayerPrefs.GetString("recordHolderName");
-                highScore = PlayerPrefs.GetInt("highScore");
 
+                Debug.Log("GameService,CheckForHighScore : CurrentPlayer->" + currentPlayerName);
+                PlayerPrefs.SetInt("highScore", UIService.instance.GetCurrentScore());
+                PlayerPrefs.SetString("recordHolderName", currentPlayerName);
+                recordHolderName = PlayerPrefs.GetString("recordHolderName");
+                highScore = UIService.instance.GetCurrentScore();
             }
             RestartGame();
         }
         public void GameResumed()
         {
+            gamePaused = false;
             SFXService.instance.ResetSounds();
             EnemyService.instance.TurnONEnmeis();
             TankService.instance.TurnONTanks();
-
-            gamePaused = false;
         }
         public string GetHighScore()
         {
@@ -82,6 +71,5 @@ namespace GameServices
         {
             return PlayerPrefs.GetString("recordHolderName");
         }
-
     }
 }

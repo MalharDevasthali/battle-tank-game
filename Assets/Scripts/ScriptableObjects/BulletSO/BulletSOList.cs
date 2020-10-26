@@ -3,12 +3,10 @@ using UnityEngine;
 
 namespace BulletSO
 {
+    [CreateAssetMenu(fileName = "BulletSOList", menuName = "ScriptableObject/Bullet/NewBulletScriptableObjectList")]
     public class BulletSOList : ScriptableObject
     {
-        [CreateAssetMenu(fileName = "BulletSOList", menuName = "ScriptableObject/Bullet/NewBulletScriptableObjectList")]
-        public class BulletScriptableObjectList : ScriptableObject
-        {
-            public BulletScriptableObject[] bulletsTypes;
-        }
+        public BulletScriptableObject[] bulletsTypes;
+
     }
 }

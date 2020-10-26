@@ -18,9 +18,9 @@ namespace EnemyServices
         private EnemyController enemyController;
 
 
-        public void SpawnWave(float enemyCount)
+        async public void SpawnWave(float enemyCount)
         {
-
+            await new WaitForSeconds(TankService.instance.tankSpawnDelay + 1);
             for (int i = 0; i < enemyCount; i++)
             {
                 CreateEnemy();
@@ -35,15 +35,14 @@ namespace EnemyServices
         {
             TankService.instance.GetCurrentTankModel().EnemiesKilled += 1;
             PlayerPrefs.SetInt("EnemiesKilled", TankService.instance.GetCurrentTankModel().EnemiesKilled);
-            Debug.Log(TankService.instance.GetCurrentTankModel().EnemiesKilled);
             UIService.instance.UpdateScoreText();
             AchievementService.instance.GetAchievementController().CheckForEnemiesKilledAchievement();
         }
 
         private void CreateEnemy()
         {
-
-            enemy = enemyTypes.enemies[0];
+            int rand = Random.Range(0, enemyTypes.enemies.Length);
+            enemy = enemyTypes.enemies[rand];
 
             EnemyModel enemyModel = new EnemyModel(enemy);
             enemyController = new EnemyController(enemy.enemyView, enemyModel);
@@ -70,13 +69,12 @@ namespace EnemyServices
             if (enemies.Count == 0)
             {
                 UnsubscribeEvents();
-                GameService.instance.SpawnWave();
+                SpawnnerService.instance.SpawnWave();
             }
 
         }
         private void UnsubscribeEvents()
         {
-            Debug.Log("Unscub");
             EventService.instance.OnEnemyDeath -= UpdateEnemiesKilledCount;
         }
 

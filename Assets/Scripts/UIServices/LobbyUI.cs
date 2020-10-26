@@ -31,20 +31,28 @@ namespace UIServices
         {
             Buttons.SetActive(false);
             HighScorePanel.SetActive(true);
-            highScoreText.text += " " + GameService.instance.GetHighScore();
-            recordHolderText.text += " " + GameService.instance.GetRecordHolder();
+            highScoreText.text = "High Score :" + GameService.instance.GetHighScore();
+            recordHolderText.text = "Record Holder :" + GameService.instance.GetRecordHolder();
 
         }
         public void Back()
         {
             Buttons.SetActive(true);
             HighScorePanel.SetActive(false);
+            highScoreText.text = null;
+            recordHolderText.text = null;
         }
         public void EnterName()
         {
             IntroPanel.SetActive(false);
             Buttons.SetActive(true);
             GameService.instance.SetCurrentPlayerName(inputName.text);
+            Debug.Log("LobbyUI,EnterName()");
+        }
+        public void ResetData()
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
         }
     }
 }

@@ -15,11 +15,13 @@ MonoBehaviour:
   enemyType: 2
   enemyView: {fileID: 5179792892772031961, guid: 3d5f92d0687a67445813e5d5e2ec0b0c,
     type: 3}
-  health: 80
-  movementSpeed: 40
-  rotationSpeed: 80
+  health: 40
+  movementSpeed: 20
+  rotationSpeed: 50
   patrollingRadius: 30
   patrolTime: 5
   fireRate: 0.5
-  attackDistace: 5
-  bulletType: {fileID: 11400000, guid: b0f2c2ddca7b55444845206d3060c682, type: 2}
+  attackDistace: 10
+  bulletType: {fileID: 11400000, guid: 719b22f0b002f4943ab7e5066925d047, type: 2}
+  Material: {fileID: 2100000, guid: 12c120f2400576c4f97a98bcca5529bc, type: 2}
+  ScaleMultiplier: 1

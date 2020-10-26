@@ -12,21 +12,23 @@ namespace EnemyServices
         [Header("Shooting")]
         public Transform shootingPoint;
 
-
         [Header("SFX")]
-
         public AudioClip destorySound;
+
         [Header("States")]
         public EnemyPatrollingState patrollingState;
         public EnemyChasingState chasingState;
         public EnemyAttackingState attackingState;
-        public EnemyState initialState;
+        [SerializeField] private EnemyState initialState;
         public EnemyState activeState;
         public EnemyStates currentState;
 
+        [Header("Essentials")]
+        public MeshRenderer[] childs;
         public EnemyController controller { get; private set; }
         public NavMeshAgent navMeshAgent { get; private set; }
         private TankView tankView;
+
 
         private void Awake()
         {
@@ -36,8 +38,13 @@ namespace EnemyServices
         {
             InitializeState();
         }
-
-
+        public void SetColor(Material material)
+        {
+            for (int i = 0; i < childs.Length; i++)
+            {
+                childs[i].material = material;
+            }
+        }
         public void SetEnemyController(EnemyController _controller)
         {
             controller = _controller;
@@ -45,6 +52,10 @@ namespace EnemyServices
         public void SetTankView(TankView tank)
         {
             tankView = tank;
+        }
+        public void SetScale(float scaleMultiplier)
+        {
+            this.gameObject.transform.localScale *= scaleMultiplier;
         }
         public Transform GetTankTransform()
         {

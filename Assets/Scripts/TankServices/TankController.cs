@@ -54,8 +54,6 @@ namespace TankServices
             EventService.instance.InvokeOnPlayerFiredBulletEvent();
             BulletService.instance.CreateBullet(GetFiringPosition(), GetFiringAngle(), GetBullet());
         }
-
-
         private void UpdateBulletsFiredCounter()
         {
             tankModel.BulletsFired += 1;
@@ -97,6 +95,7 @@ namespace TankServices
         {
             EventService.instance.OnPlayerFiredBullet -= UpdateBulletsFiredCounter;
         }
+
 
         private void Dead()
         {

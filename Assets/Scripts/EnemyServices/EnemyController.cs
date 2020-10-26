@@ -3,9 +3,7 @@ using UnityEngine.AI;
 using VFXServices;
 using BulletServices;
 using Commons;
-using UIServices;
-using TankServices;
-using AchievementServices;
+using GameServices;
 using SFXServices;
 
 namespace EnemyServices
@@ -20,9 +18,15 @@ namespace EnemyServices
         public EnemyController(EnemyView _view, EnemyModel _model)
         {
             model = _model;
-            view = GameObject.Instantiate<EnemyView>(_view, GetRandomPosition(), Quaternion.identity);
+            view = GameObject.Instantiate<EnemyView>(_view, SpawnnerService.instance.GetRandomPosition(), Quaternion.identity);
             model.SetEnemyController(this);
             view.SetEnemyController(this);
+            view.SetScale(model.scaleMultiplier);
+            view.SetColor(model.material);
+            if (model.enemyType == EnemyType.Heavy)
+            {
+                view.shootingPoint.transform.localPosition -= new Vector3(0, 0.5f, 0);
+            }
         }
         public Vector3 GetRandomPosition()
         {

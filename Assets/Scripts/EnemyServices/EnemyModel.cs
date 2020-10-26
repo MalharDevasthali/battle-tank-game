@@ -8,20 +8,25 @@ namespace EnemyServices
 {
     public class EnemyModel
     {
+        //Enemy Type
         public EnemyType enemyType { get; private set; }
+
+        //Movement and attack
         public float movementSpeed { get; private set; }
         public float rotationSpeed { get; private set; }
-
         public float patrollingRadius { get; private set; }
         public float patrolTime { get; private set; }
-
         public float fireRate { get; private set; }
         public float attackDist { get; private set; }
         public BulletScriptableObject bullet { get; private set; }
 
+        //health
         public float health { get; set; }
-
         private EnemyController controller;
+
+        //visuals
+        public Material material { get; private set; }
+        public float scaleMultiplier { get; private set; }
 
 
         public EnemyModel(EnemyScriptableObject enemyData)
@@ -35,6 +40,8 @@ namespace EnemyServices
             attackDist = enemyData.attackDistace;
             bullet = enemyData.bulletType;
             health = enemyData.health;
+            material = enemyData.Material;
+            scaleMultiplier = enemyData.ScaleMultiplier;
         }
 
 
@@ -46,6 +53,7 @@ namespace EnemyServices
         {
             bullet = null;
             controller = null;
+            material = null;
         }
     }
 }

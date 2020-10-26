@@ -255,6 +255,11 @@ MonoBehaviour:
   initialState: 1
   activeState: 0
   currentState: {fileID: 0}
+  childs:
+  - {fileID: 275821503407823179}
+  - {fileID: 275821503407823181}
+  - {fileID: 275821503407823171}
+  - {fileID: 275821503407823177}
 --- !u!65 &5024593055069210385
 BoxCollider:
   m_ObjectHideFlags: 0

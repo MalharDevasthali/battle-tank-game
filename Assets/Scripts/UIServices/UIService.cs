@@ -15,6 +15,7 @@ namespace UIServices
         public TextMeshProUGUI HealthText;
         public TextMeshProUGUI ScoreText;
         public GameObject PausePanel;
+        public GameObject GameOverPanel;
         private int currentScore;
 
         private void Start()
@@ -44,16 +45,18 @@ namespace UIServices
                 PopUpText.text = "Achievement Unlocked!\n";
                 AchievementInfoText.text = achievementInfo;
             }
-
             PopUpImage.gameObject.SetActive(true);
             PopUpText.text = PopUpText.text + name;
             await new WaitForSeconds(timeForPopUp);
             PopUpText.text = null;
             if (isAchievement)
-                achievementInfo = null;
+                AchievementInfoText.text = null;
             PopUpImage.gameObject.SetActive(false);
             GameService.instance.GameResumed();
 
+        }
+        public void ShowGameOverUI()
+        {
 
         }
         public int GetCurrentScore()

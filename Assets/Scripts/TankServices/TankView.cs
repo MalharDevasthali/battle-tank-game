@@ -16,14 +16,13 @@ namespace TankServices
         public AudioClip BulletShootSFX;
         public AudioClip TankIdleSFX;
         public AudioClip TankMovingSFX;
-
-
         private float rotation;
         private float movement;
         private float canFire = 0f;
         [Header("Movement and Shooting")]
         public Transform BulletShootPoint;
         public MeshRenderer[] childs;
+        private TankQuarter currentQuarter;
 
         private TankController tankController;
 
@@ -51,6 +50,30 @@ namespace TankServices
 
             if (rotation != 0)
                 tankController.Rotate(rotation, tankController.tankModel.rotationSpeed);
+        }
+        public TankQuarter GetQuarter()
+        {
+            Debug.Log(currentQuarter);
+            return currentQuarter;
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Q1"))
+            {
+                currentQuarter = TankQuarter.Quarter1;
+            }
+            else if (other.CompareTag("Q2"))
+            {
+                currentQuarter = TankQuarter.Quarter2;
+            }
+            else if (other.CompareTag("Q3"))
+            {
+                currentQuarter = TankQuarter.Quarter3;
+            }
+            else if (other.CompareTag("Q4"))
+            {
+                currentQuarter = TankQuarter.Quarter4;
+            }
         }
 
         private void Movement()

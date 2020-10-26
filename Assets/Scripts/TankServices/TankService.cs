@@ -12,6 +12,7 @@ namespace TankServices
         public TankSOList tankList;
         private TankModel currentTankModel;
         private TankController tankController;
+        public int tankSpawnDelay = 3;
 
         public TankScriptableObject tankScriptable { get; private set; }
         private List<TankController> tanks = new List<TankController>();
@@ -19,7 +20,7 @@ namespace TankServices
         async private void Start()
         {
 
-            await new WaitForSeconds(3f);
+            await new WaitForSeconds(tankSpawnDelay);
             CreateTank(); // if you want multiple players call CreateTanks() method mutltiple times
 
             //tankModel do not have Mono as parent so we have to pass it using contructor's returned object
@@ -40,9 +41,9 @@ namespace TankServices
         {
             return currentTankModel;
         }
-        public TankController GetTankController()
+        public TankController GetTankController(int index = 0) //by default only 1st tankController will be returned 
         {
-            return tankController;
+            return tanks[index];
         }
 
         public void DestroyTank(TankController tank)

@@ -28,6 +28,9 @@ namespace EnemySO
         public float fireRate;
         public float attackDistace;
         public BulletScriptableObject bulletType;
+        [Header("Visuals")]
+        public Material Material;
+        public float ScaleMultiplier = 1;
     }
 
 
